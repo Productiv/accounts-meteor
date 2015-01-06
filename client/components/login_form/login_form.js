@@ -32,6 +32,8 @@ Template.loginForm.events({
         return false;
       }
 
+      var user = Meteor.user();
+
       console.log("User ID: " + user.uid + ", Provider: " + user.provider);
       Router.go('/');
     });
@@ -54,12 +56,12 @@ Template.loginForm.events({
         name: name
       }
     }, function (error) {
-      if (error === null) {
-        console.log("User ID: " + user.uid + ", Provider: " + user.provider);
-        Router.go('/');
-      } else {
+      if (error) {
         console.log("Error authenticating user:", error);
         $('.notice').html(error);
+      } else {
+        console.log("User ID: " + user.uid + ", Provider: " + user.provider);
+        Router.go('/');
       }
     });
   }
